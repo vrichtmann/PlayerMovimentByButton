@@ -15,16 +15,12 @@ public class PlayerMoviment : MonoBehaviour
     private Player player;
     private Animator playerAnimator;
 
-    void Start()
-    {
+    void Start(){// Add All Buttons Listerneres
         addAllListeners();
     }
 
-    private void addAllListeners()
-    {
-        Button btn1 = clickLeft.GetComponent<Button>();
-        Button btn2 = clickRigth.GetComponent<Button>();
-
+    private void addAllListeners(){
+        //                           Method Name             Button Method           Args     
         AddEventTrigger(clickLeft, "OnPointerDown", EventTriggerType.PointerDown, new object[] { 1 });
         AddEventTrigger(clickLeft, "OnPointerUP", EventTriggerType.PointerUp);
 
@@ -32,8 +28,8 @@ public class PlayerMoviment : MonoBehaviour
         AddEventTrigger(clickRigth, "OnPointerUP", EventTriggerType.PointerUp);
     }
 
-    private void AddEventTrigger(Button _button, string action, EventTriggerType _event, params object[] objects)
-    {
+    //                             Button         Method Name          Button Method           Args     
+    private void AddEventTrigger(Button _button, string action, EventTriggerType _event, params object[] objects){
         EventTrigger trigger = _button.gameObject.AddComponent<EventTrigger>();
         var pointerDown = new EventTrigger.Entry();
         System.Type ourType = this.GetType();
@@ -47,18 +43,18 @@ public class PlayerMoviment : MonoBehaviour
         trigger.triggers.Add(pointerDown);
     }
 
-    private void OnPointerDown(int teste)
-    {
-        playerMoveDir(teste);
+    //              Press DOWN (Direction Move Player)
+    private void OnPointerDown(int _dir){
+        playerMoveDir(_dir);
     }
 
-    private void OnPointerUP()
-    {
+    //            Press UP
+    private void OnPointerUP(){
         playerStopMove();
     }
 
-    public void playerMoveDir(int _direction)
-    {
+    // Move A Player (DIR) 
+    public void playerMoveDir(int _direction){
         player = GameObject.FindGameObjectWithTag("Player").GetComponent<Player>();
         playerAnimator = GameObject.FindGameObjectWithTag("Player").GetComponent<Animator>();
         player.playerMoveDir = _direction;
@@ -66,8 +62,8 @@ public class PlayerMoviment : MonoBehaviour
         playerAnimator.SetBool("playerMove", true);
     }
 
-    public void playerStopMove()
-    {
+    // STOP MOVE 
+    public void playerStopMove(){
         player = GameObject.FindGameObjectWithTag("Player").GetComponent<Player>();
         playerAnimator = GameObject.FindGameObjectWithTag("Player").GetComponent<Animator>();
         player.isWalking = false;
